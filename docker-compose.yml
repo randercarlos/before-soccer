@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  before-soccer-db:
+    image: mysql:5.7
+    container_name: before-soccer-db
+    volumes:
+      - ./storage/docker/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 96430409
+      MYSQL_DATABASE: before-soccer
+      MYSQL_USER: before
+      MYSQL_PASSWORD: soccer
+
+  before-soccer-app:
+    image: ambientum/php:7.2-nginx
+    container_name: before-soccer-app
+    depends_on:
+      - before-soccer-db
+    ports:
+      - 8000:8080
+    volumes:
+      - .:/var/www/app
+
+
